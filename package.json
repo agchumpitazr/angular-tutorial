@@ -1,0 +1,30 @@
+{
+  "name": "angular-tutorial",
+  "version": "1.0.0",
+  "description": "angular course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agchumpitazr/angular-tutorial.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/agchumpitazr/angular-tutorial/issues"
+  },
+  "homepage": "https://github.com/agchumpitazr/angular-tutorial#readme",
+  "devDependencies": {
+    "husky": "^8.0.0",
+    "lint-staged": "^16.1.5",
+    "typescript": "^5.9.2"
+  },
+  "lint-staged": {
+    "**/*.ts": "npx tsc --noEmit"
+  }
+}
