@@ -5,6 +5,7 @@
     "module": "ESNext",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
+    "experimentalDecorators": true, // Enable experimental support for decorators
 
     /* Bundler mode */
     "moduleResolution": "bundler",
