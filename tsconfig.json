@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "es2022",
+        "lib": ["es2022", "dom"],
+        "strict": true,
+        "noEmit": true,
+        "skipLibCheck": true,
+        "experimentalDecorators": true,
+        "baseUrl": ".",
+        "moduleResolution": "node",
+        "paths": {
+            "@angular/*": ["./node_modules/@angular/*"]
+        },
+        "types": ["jasmine", "node"]
+    },
+    "include": ["01-typescript/**/*.ts", "02-bases/**/*.ts"]
+}
