@@ -10,5 +10,9 @@ export const routes: Routes = [
   {
     path: 'hero',
     component: HeroPageComponent
+  },
+  {
+    path: '**', // Wildcard route for a 404 page
+    redirectTo: ''
   }
 ];
