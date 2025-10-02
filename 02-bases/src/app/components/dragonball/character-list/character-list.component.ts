@@ -9,4 +9,5 @@ import { Component, input } from '@angular/core';
 })
 export class CharacterListComponent {
   characters = input.required<Character[]>();
+  listName = input<string>('No name');
 }

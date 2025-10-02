@@ -1,4 +1,4 @@
-<h3>Lista de personajes fuertes:</h3>
+<h3>{{listName()}}</h3>
     <ul class="list-group">
       @for (character of characters(); track character.id;
       let idx = $index) {
@@ -8,7 +8,7 @@
             <strong [class.text-danger]="character.power > 12000"
               [ngClass]="{'text-success': character.power <= 12000}">
               - {{character.power}}
-            </strong>
+            </strong> 
           </li>
         } @else {
           <li><strong>No es muy fuerte</strong></li>
