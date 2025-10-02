@@ -35,22 +35,6 @@
   </div>
 
   <div class="col-12 col-sm-6">
-    <h3>Lista de personajes fuertes:</h3>
-    <ul class="list-group">
-      @for (character of characters(); track character.id;
-      let idx = $index) {
-        @if (character.power > 6000) {
-          <li>
-            <span>{{idx + 1}} - {{character.name}}</span>
-            <strong [class.text-danger]="character.power > 12000"
-              [ngClass]="{'text-success': character.power <= 12000}">
-              - {{character.power}}
-            </strong>
-          </li>
-        } @else {
-          <li><strong>No es muy fuerte</strong></li>
-        }
-      }
-    </ul>
+    <dragonball-character-list [characters]="characters()"/>
   </div>
 </section>

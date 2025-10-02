@@ -1,17 +1,12 @@
 import { NgClass } from "@angular/common";
 import { Component, signal } from "@angular/core";
-
-
-interface Character {
-  id: number;
-  name: string;
-  power: number;
-}
+import { CharacterListComponent } from "../../components/dragonball/character-list/character-list.component";
+import { Character } from '../../interfaces/character.interface';
 
 @Component({
   selector: 'dragonball-super-page', //? It is not needed because it is a page component, not a reusable component
   templateUrl: './dragonball-super-page.component.html',
-  imports: [NgClass],
+  imports: [NgClass, CharacterListComponent],
 })
 export class DragonballSuperPageComponent {
 
