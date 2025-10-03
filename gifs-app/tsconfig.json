@@ -14,7 +14,7 @@
     // "experimentalDecorators": true,
     // "importHelpers": true,
     "target": "ES2022",
-    // "module": "node16",
+    "module": "es2022",
     "noEmit": false
   },
   "angularCompilerOptions": {
