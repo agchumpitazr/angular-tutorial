@@ -1,34 +1,31 @@
 {
-  "name": "angular-tutorial",
-  "version": "1.0.0",
-  "description": "angular course",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install",
-    "type-check": "tsc --noEmit --project tsconfig.json",
-    "lint-staged:check": "npx lint-staged --allow-empty"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/agchumpitazr/angular-tutorial.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/agchumpitazr/angular-tutorial/issues"
-  },
-  "homepage": "https://github.com/agchumpitazr/angular-tutorial#readme",
-  "devDependencies": {
-    "@types/jasmine": "^5.1.9",
-    "@types/node": "^24.3.0",
-    "husky": "^8.0.0",
-    "lint-staged": "^16.1.5",
-    "typescript": "^5.9.2"
-  },
-  "lint-staged": {
-    "**/*.ts": "npm run type-check"
-  }
+    "name": "angular-tutorial",
+    "version": "1.0.0",
+    "description": "angular course",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prepare": "husky install",
+        "type-check": "tsc --noEmit --project",
+        "lint-staged:check": "npx lint-staged --allow-empty"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/agchumpitazr/angular-tutorial.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "bugs": {
+        "url": "https://github.com/agchumpitazr/angular-tutorial/issues"
+    },
+    "homepage": "https://github.com/agchumpitazr/angular-tutorial#readme",
+    "devDependencies": {
+        "@types/jasmine": "^5.1.9",
+        "@types/node": "^24.3.0",
+        "husky": "^8.0.0",
+        "lint-staged": "^16.1.5",
+        "typescript": "^5.9.2"
+    }
 }
