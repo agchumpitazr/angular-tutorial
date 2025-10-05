@@ -20,8 +20,9 @@
 
 <section id="nav2" class="w-full px-6">
   @for (key of gifService.searchHistoryKeys(); track key) {
-  <a
-    [routerLink]="'/dashboard/search'"
+    <!-- [routerLink]="['/dashboard/history', key] : navigate to history page with the search term as a route parameter -->
+    <a
+    [routerLink]="['/dashboard/history', key]"
     routerLinkActive="bg-blue-800"
     class="w-full px-2 inline-flex space-x-2 items-center border-b border-slate-700 py-3 hover:bg-white/5 transition ease-linear duration-150"
   >
