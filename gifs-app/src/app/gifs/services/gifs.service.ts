@@ -8,7 +8,9 @@ import { GifMapper } from '../mapper/gif.mapper';
 @Injectable({ providedIn: 'root' })
 export class GifService {
   private http = inject(HttpClient); // Inyectar HttpClient
+
   trendingGifs = signal<Gif[]> ([]);
+  trengingGifsLoading = signal<boolean>(true);
 
   constructor() {
     this.loadTrendingGifs();
@@ -25,6 +27,7 @@ export class GifService {
       .subscribe((response) => {
         const gifs = GifMapper.mapGiphyListToGifList(response.data);
         this.trendingGifs.set(gifs);
+        this.trengingGifsLoading.set(false);
         console.log(gifs);
       });
   }
