@@ -5,6 +5,7 @@ import type { GiphyResponse } from '../interfaces/giphy.interface';
 import { Gif } from '../interfaces/gif.interface';
 import { GifMapper } from '../mapper/gif.mapper';
 import { map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class GifService {
@@ -13,14 +14,14 @@ export class GifService {
   trendingGifs = signal<Gif[]>([]);
   trengingGifsLoading = signal<boolean>(true);
 
-  searchHistory = signal<Record<string, Gif[]>>({});
+  searchHistory = signal<Record<string, Gif[]>>({}); // Record: tipo de dato que representa un objeto con claves de tipo string y valores de tipo Gif[]
   searchHistoryKeys = computed(() => Object.keys(this.searchHistory()));
 
   constructor() {
     this.loadTrendingGifs();
   }
 
-  loadTrendingGifs() {
+  loadTrendingGifs(): void {
     this.http
       .get<GiphyResponse>(`${environment.giphyUrl}/gifs/trending`, {
         params: {
@@ -36,7 +37,7 @@ export class GifService {
       });
   }
 
-  searchGifs(query: string) {
+  searchGifs(query: string): Observable<Gif[]> {
     return this.http
       .get<GiphyResponse>(`${environment.giphyUrl}/gifs/search`, {
         params: {
@@ -62,5 +63,9 @@ export class GifService {
     //   const gifSearch = GifMapper.mapGiphyListToGifList(response.data);
     //   console.log({ gifSearch });
     // });
+  }
+
+  getHistoryGifs(query: string): Gif[] {
+    return this.searchHistory()[query.toLowerCase()] || [];
   }
 }

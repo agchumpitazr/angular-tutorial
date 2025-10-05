@@ -1,14 +1,19 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
+import { GifService } from '../../services/gifs.service';
+import { ListComponent } from "../../components/list/list.component";
 
 @Component({
   selector: 'app-history-page',
-  imports: [],
+  imports: [ListComponent],
   templateUrl: './history-page.component.html'
 })
 export default class HistoryPageComponent {
+
+  gifService = inject(GifService);
+
   // ActivatedRoute: servicio que proporciona información sobre la ruta activada asociada al componente cargado en una ruta
   // .params is an observable (we can subscribe to it)
 
@@ -28,4 +33,8 @@ export default class HistoryPageComponent {
       map(params => params['query'])
     )
   );
+
+  gifsByKey = computed(() => {
+    return this.gifService.getHistoryGifs(this.query());
+  });
 }
