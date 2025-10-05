@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '@environments/environment';
 import type { GiphyResponse } from '../interfaces/giphy.interface';
 import { Gif } from '../interfaces/gif.interface';
 import { GifMapper } from '../mapper/gif.mapper';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class GifService {
@@ -12,6 +12,9 @@ export class GifService {
 
   trendingGifs = signal<Gif[]>([]);
   trengingGifsLoading = signal<boolean>(true);
+
+  searchHistory = signal<Record<string, Gif[]>>({});
+  searchHistoryKeys = computed(() => Object.keys(this.searchHistory()));
 
   constructor() {
     this.loadTrendingGifs();
@@ -41,17 +44,23 @@ export class GifService {
           q: query,
           limit: '25',
         },
-      }).pipe( // operador para transformar el observable
-        // tap(): este operador permite ejecutar efectos secundarios sin modificar el flujo de datos
+      })
+      .pipe(// pipe() : este método permite encadenar múltiples operadores de RxJS para transformar, filtrar o realizar efectos secundarios en los datos emitidos por el observable
         // map() : este operador transforma los datos emitidos por el observable
-        map(( { data } ) => data), // extraemos solo la propiedad data del objeto de respuesta
-        map( (items) => GifMapper.mapGiphyListToGifList(items)
+        map(({ data }) => data), // extraemos solo la propiedad data del objeto de respuesta
+        map((items) => GifMapper.mapGiphyListToGifList(items)),
 
-        )
-      )
-      // .subscribe((response) => {
-      //   const gifSearch = GifMapper.mapGiphyListToGifList(response.data);
-      //   console.log({ gifSearch });
-      // });
+        // tap(): este operador permite ejecutar efectos secundarios sin modificar el flujo de datos
+        tap(items => {
+          this.searchHistory.update(history => ({
+            ...history,
+            [query.toLowerCase()]: items
+          }))
+        })
+      );
+    // .subscribe((response) => {
+    //   const gifSearch = GifMapper.mapGiphyListToGifList(response.data);
+    //   console.log({ gifSearch });
+    // });
   }
 }
