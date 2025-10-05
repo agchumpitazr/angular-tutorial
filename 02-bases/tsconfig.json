@@ -23,13 +23,5 @@
     "strictTemplates": true
   },
   "files": [],
-  "include": ["src/**/*.ts"],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
-    }
-  ]
+  "include": ["src/**/*.ts"]
 }

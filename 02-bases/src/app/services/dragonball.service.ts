@@ -11,7 +11,7 @@ export class DragonballService {
 
   characters = signal<Character[]>(loadFromLocalStorage()); // Load initial value from localStorage
 
-  saveInLocalStorage = effect(() => {
+  saveInLocalStorage = effect(() => { // effect: permite ejecutar código reactivo en respuesta a cambios en las señales (efectos secundarios)
     console.log('Characters count: ', this.characters());
     localStorage.setItem('characters', JSON.stringify(this.characters()));
   })
