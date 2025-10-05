@@ -9,7 +9,7 @@ import { GifMapper } from '../mapper/gif.mapper';
 export class GifService {
   private http = inject(HttpClient); // Inyectar HttpClient
 
-  trendingGifs = signal<Gif[]> ([]);
+  trendingGifs = signal<Gif[]>([]);
   trengingGifsLoading = signal<boolean>(true);
 
   constructor() {
@@ -29,6 +29,21 @@ export class GifService {
         this.trendingGifs.set(gifs);
         this.trengingGifsLoading.set(false);
         console.log(gifs);
+      });
+  }
+
+  searchGifs(query: string) {
+    this.http
+      .get<GiphyResponse>(`${environment.giphyUrl}/gifs/search`, {
+        params: {
+          api_key: environment.giphyApiKey,
+          q: query,
+          limit: '25',
+        },
+      })
+      .subscribe((response) => {
+        const gifSearch = GifMapper.mapGiphyListToGifList(response.data);
+        console.log({ gifSearch });
       });
   }
 }
