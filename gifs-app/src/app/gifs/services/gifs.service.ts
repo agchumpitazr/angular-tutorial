@@ -4,6 +4,7 @@ import { environment } from '@environments/environment';
 import type { GiphyResponse } from '../interfaces/giphy.interface';
 import { Gif } from '../interfaces/gif.interface';
 import { GifMapper } from '../mapper/gif.mapper';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class GifService {
@@ -33,17 +34,24 @@ export class GifService {
   }
 
   searchGifs(query: string) {
-    this.http
+    return this.http
       .get<GiphyResponse>(`${environment.giphyUrl}/gifs/search`, {
         params: {
           api_key: environment.giphyApiKey,
           q: query,
           limit: '25',
         },
-      })
-      .subscribe((response) => {
-        const gifSearch = GifMapper.mapGiphyListToGifList(response.data);
-        console.log({ gifSearch });
-      });
+      }).pipe( // operador para transformar el observable
+        // tap(): este operador permite ejecutar efectos secundarios sin modificar el flujo de datos
+        // map() : este operador transforma los datos emitidos por el observable
+        map(( { data } ) => data), // extraemos solo la propiedad data del objeto de respuesta
+        map( (items) => GifMapper.mapGiphyListToGifList(items)
+
+        )
+      )
+      // .subscribe((response) => {
+      //   const gifSearch = GifMapper.mapGiphyListToGifList(response.data);
+      //   console.log({ gifSearch });
+      // });
   }
 }
