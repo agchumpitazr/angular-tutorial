@@ -28,6 +28,14 @@ export class GifService {
     localStorage.setItem('searchedGifs', JSON.stringify(this.searchHistory()));
   });
 
+  trendingGifGroup = computed<Gif[][]>(() => {
+    const groups = [];
+    for (let i = 0; i < this.trendingGifs().length; i += 3) {
+      groups.push(this.trendingGifs().slice(i, i + 3));
+    }
+    return groups;
+  });
+
   constructor() {
     this.loadTrendingGifs();
   }
@@ -44,7 +52,6 @@ export class GifService {
         const gifs = GifMapper.mapGiphyListToGifList(response.data);
         this.trendingGifs.set(gifs);
         this.trengingGifsLoading.set(false);
-        console.log(gifs);
       });
   }
 
@@ -65,7 +72,6 @@ export class GifService {
 
         // tap(): este operador permite ejecutar efectos secundarios sin modificar el flujo de datos
         tap((items) => {
-          console.log({ items, query, history: this.searchHistory() });
           this.searchHistory.update((history) => ({
             ...history,
             [query.toLowerCase()]: items,
