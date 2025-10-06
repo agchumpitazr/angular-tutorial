@@ -16,8 +16,10 @@ function loadFromLocalStorage(): Record<string, Gif[]> {
 export class GifService {
   private http = inject(HttpClient); // Inyectar HttpClient
 
+  trengingGifsLoading = signal<boolean>(false);
   trendingGifs = signal<Gif[]>([]);
-  trengingGifsLoading = signal<boolean>(true);
+  private trendingPage = signal<number>(0);
+
 
   // searchHistory = signal<Record<string, Gif[]>>({}); // Record: tipo de dato que representa un objeto con claves de tipo string y valores de tipo Gif[]
   searchHistory = signal<Record<string, Gif[]>>(loadFromLocalStorage());
@@ -41,17 +43,23 @@ export class GifService {
   }
 
   loadTrendingGifs(): void {
+    if(this.trengingGifsLoading()) return;
+    this.trengingGifsLoading.set(true);
+
+
     this.http
       .get<GiphyResponse>(`${environment.giphyUrl}/gifs/trending`, {
         params: {
           api_key: environment.giphyApiKey,
-          limit: '25',
+          limit: 25,
+          offset: this.trendingPage() * 25,
         },
       })
       .subscribe((response) => {
         const gifs = GifMapper.mapGiphyListToGifList(response.data);
-        this.trendingGifs.set(gifs);
+        this.trendingGifs.update(currentGifs => [...gifs, ...currentGifs]);
         this.trengingGifsLoading.set(false);
+        this.trendingPage.update(page => page + 1);
       });
   }
 
