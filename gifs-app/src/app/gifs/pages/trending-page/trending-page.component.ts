@@ -9,10 +9,18 @@ import { GifService } from '../../services/gifs.service';
 })
 export default class TrendingPageComponent {
   gifService = inject(GifService);
-  scrollDivRef = viewChild<ElementRef>('gifsContainer');
+  scrollDivRef = viewChild<ElementRef<HTMLDivElement>>('gifsContainer');
 
   onScroll(event: Event) {
     const scrollDiv = this.scrollDivRef()?.nativeElement;
-    console.log(scrollDiv);
+    if(!scrollDiv) return;
+
+    const scrollTop = scrollDiv.scrollTop; // How far the user has scrolled
+    const clientHeight = scrollDiv.clientHeight; // Height of the visible area
+    const scrollHeight = scrollDiv.scrollHeight; // Total height of the content
+
+    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 300; // 10px threshold
+
+    console.log(scrollDiv , isAtBottom);
   }
 }
