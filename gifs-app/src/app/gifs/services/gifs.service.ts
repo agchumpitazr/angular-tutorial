@@ -57,7 +57,7 @@ export class GifService {
       })
       .subscribe((response) => {
         const gifs = GifMapper.mapGiphyListToGifList(response.data);
-        this.trendingGifs.update(currentGifs => [...gifs, ...currentGifs]);
+        this.trendingGifs.update(currentGifs => [...currentGifs,...gifs]);
         this.trengingGifsLoading.set(false);
         this.trendingPage.update(page => page + 1);
       });

@@ -1,13 +1,20 @@
-import { Component, ElementRef, inject, viewChild } from '@angular/core';
-import { ListComponent } from "../../components/list/list.component";
+import { AfterViewInit, Component, ElementRef, inject, viewChild } from '@angular/core';
 import { GifService } from '../../services/gifs.service';
+import { ScrollStageService } from '../../services/scroll-state.service';
+
 
 @Component({
   selector: 'app-trending-page',
-  // imports: [ListComponent],
   templateUrl: './trending-page.component.html',
 })
-export default class TrendingPageComponent {
+export default class TrendingPageComponent implements AfterViewInit {
+
+  ngAfterViewInit(): void {
+    const scrollDiv = this.scrollDivRef()?.nativeElement;
+    if(!scrollDiv) return;
+    scrollDiv.scrollTop = this.scrollStateService.trendingScrollState();
+  }
+  scrollStateService = inject(ScrollStageService);
   gifService = inject(GifService);
   scrollDivRef = viewChild<ElementRef<HTMLDivElement>>('gifsContainer');
 
@@ -21,6 +28,7 @@ export default class TrendingPageComponent {
 
     const isAtBottom = scrollTop + clientHeight >= scrollHeight - 300; // 10px threshold
 
+    this.scrollStateService.trendingScrollState.set(scrollTop);
     if (isAtBottom) {
       this.gifService.loadTrendingGifs();
     }
