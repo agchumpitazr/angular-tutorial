@@ -13,5 +13,5 @@
         },
         "types": ["jasmine", "node"]
     },
-    "include": ["01-typescript/src/**/*.ts", "02-bases/src/**/*.ts", "gifs-app/src/**/*.ts"]
+    "include": ["01-typescript/src/**/*.ts", "02-bases/src/**/*.ts", "gifs-app/src/**/*.ts", "country-app/src/**/*.ts"]
 }
