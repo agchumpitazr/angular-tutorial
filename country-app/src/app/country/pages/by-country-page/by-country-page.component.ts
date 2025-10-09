@@ -3,10 +3,8 @@ import { CountryTableComponent } from "../../components/country-table/country-ta
 import { CountrySearchInputComponent } from "../../components/country-search-input/country-search-input.component";
 
 @Component({
-  selector: 'app-by-capital-page',
+  selector: 'app-by-country-page',
   imports: [CountryTableComponent, CountrySearchInputComponent],
-  templateUrl: './by-capital-page.component.html',
+  templateUrl: './by-country-page.component.html',
 })
-export class ByCapitalPageComponent {
-
-}
+export class ByCountryPageComponent { }

@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
 import { ByCapitalPageComponent } from './pages/by-capital-page/by-capital-page.component';
 import { CountryLayoutComponent } from './layouts/country-layout/country-layout.component';
+import { ByRegionPageComponent } from './pages/by-region-page/by-region-page.component';
+import { ByCountryPageComponent } from './pages/by-country-page/by-country-page.component';
+import { CountryPageComponent } from './pages/country-page/country-page.component';
 
 export const countryRoutes: Routes = [
   {
@@ -9,15 +12,26 @@ export const countryRoutes: Routes = [
     children: [
       {
         path: 'by-capital',
-        component: ByCapitalPageComponent
+        component: ByCapitalPageComponent,
+      },
+      {
+        path: 'by-region',
+        component: ByRegionPageComponent,
+      },
+      {
+        path: 'by-country',
+        component: ByCountryPageComponent,
+      },
+      {
+        path: 'by/:code',
+        component: CountryPageComponent
       },
       {
         path: '**',
-        redirectTo: 'by-capital'
-      }
+        redirectTo: 'by-capital',
+      },
     ],
   },
-
-]
+];
 
 export default countryRoutes; // Default export to be able to import it with any name in the app.routes.ts
