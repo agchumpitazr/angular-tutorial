@@ -1,2 +1,7 @@
-<country-search-input placeholder="Search by Capital..."/>
-<country-table/>
+<country-search-input
+placeholder="Search by Capital..."
+(searchValue) = "onSearch($event)"/>
+
+<country-table
+  [countries]="countries()"
+/>

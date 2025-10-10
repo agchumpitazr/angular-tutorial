@@ -7,13 +7,24 @@
         <th>Name</th>
         <th>Capital</th>
         <th>Population</th>
-        <th>Region</th>
+        <th>Info</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-
-      </tr>
+      @for (country of countries(); track  country.cca2; let index = $index) {
+        <tr>
+          <td>{{ index + 1 }}</td>
+          <td>
+            <img [src]="country.flagSVG" [alt]="country.name" class="inline w-6 h-4 mr-2"/>
+          </td>
+          <td>{{ country.name }}</td>
+          <td>{{ country.capital }}</td>
+          <td>{{ country.population }}</td>
+          <td>
+            <a class="link-primary">More Info</a>
+          </td>
+        </tr>
+      }
     </tbody>
 
   </table>
