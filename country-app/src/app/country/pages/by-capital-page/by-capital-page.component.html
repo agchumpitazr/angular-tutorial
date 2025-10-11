@@ -2,6 +2,13 @@
 placeholder="Search by Capital..."
 (searchValue) = "onSearch($event)"/>
 
-<country-table
-  [countries]="countries()"
-/>
+@if (isError()) {
+  <div class="alert alert-danger mt-2">
+    {{ isError() }}
+  </div>
+} @else {
+  <country-table
+    [countries]="countries()"
+  />
+}
+

@@ -22,9 +22,18 @@ export class ByCapitalPageComponent {
     this.isError.set(null);
     this.isLoading.set(true);
 
-    this.countryServide.searchByCapital(query).subscribe((countriesResp) => {
-      this.countries.set(countriesResp);
-      this.isLoading.set(false);
+    this.countryServide.searchByCapital(query)
+    .subscribe({ // Using the object form of subscribe to handle next and error separately
+      next: (countries) => { // Handle successful response. Next callback is called when data is received
+        this.countries.set(countries);
+        this.isLoading.set(false);
+      },
+      error: (err) => { // Handle error response
+        this.isLoading.set(false);
+        this.isError.set(err);
+        this.countries.set([]);
+      }
+
     });
   }
 }
