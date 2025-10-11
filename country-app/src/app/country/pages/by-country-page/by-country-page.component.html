@@ -1,8 +1,14 @@
 
 <country-search-input
 placeholder="Search by Country..."
-(searchValue) = "onSearch($event)"/>
+(searchValue) = "query.set($event)"/>
 
-<country-table
-  [countries]="countries()"
-/>
+@if(countryResource.error()) {
+  <div class="alert alert-danger mt-2">
+    {{ countryResource.error() }}
+  </div>
+} @if (countryResource.hasValue()) {
+  <country-table
+    [countries]="countryResource.value()"
+  />
+}
