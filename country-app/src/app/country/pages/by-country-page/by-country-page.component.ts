@@ -2,7 +2,8 @@ import { Component, inject, resource, signal } from '@angular/core';
 import { CountryTableComponent } from '../../components/country-table/country-table.component';
 import { CountrySearchInputComponent } from '../../components/country-search-input/country-search-input.component';
 import { CountryService } from '../../services/country.service';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-by-country-page',
@@ -13,14 +14,23 @@ export class ByCountryPageComponent {
   countryServide = inject(CountryService);
   query = signal('');
 
-  countryResource = resource({
+  countryResource = rxResource({
     params: () => ({ query: this.query() }),
-    loader: async ({ params }) => {
+    stream: ({ params }) => {
       // Destructure params to get query
-      if (!params.query) return [];
-      return await firstValueFrom(this.countryServide.searchByCountry(params.query)); // Convert Observable to Promise
+      if (!params.query) return of([]);
+      return this.countryServide.searchByCountry(params.query); // Convert Observable to Promise
     },
   });
+
+  // countryResource = resource({
+  //   params: () => ({ query: this.query() }),
+  //   loader: async ({ params }) => {
+  //     // Destructure params to get query
+  //     if (!params.query) return [];
+  //     return await firstValueFrom(this.countryServide.searchByCountry(params.query)); // Convert Observable to Promise
+  //   },
+  // });
 
   // isLoading = signal(false);
   // isError = signal<string | null>(null);
