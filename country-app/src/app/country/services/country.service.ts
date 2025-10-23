@@ -18,7 +18,7 @@ export class CountryService {
     query = query.toLowerCase().trim();
     return this.http.get<RestCountryResponse[]>(`${API_URL}/capital/${query}`)
     .pipe(
-      map((countries) => CountryMapper.toCountries(countries)),
+      map((resp) => CountryMapper.toCountries(resp)),
       catchError((err) => {
         return throwError(() => new Error(`Capital not found "${query}"`));
       })
@@ -29,10 +29,21 @@ export class CountryService {
     query = query.toLowerCase().trim();
     return this.http.get<RestCountryResponse[]>(`${API_URL}/name/${query}`)
     .pipe(
-      map((countries) => CountryMapper.toCountries(countries)),
+      map((resp) => CountryMapper.toCountries(resp)),
       delay(2000),
       catchError((error) => {
         return throwError(() => new Error(`Country not found "${query}"`));
+      })
+    );
+  }
+
+  searchCountryByAlphaCode(code: string): Observable<Country | undefined> {
+    return this.http.get<RestCountryResponse[]>(`${API_URL}/alpha/${code}`)
+    .pipe(
+      map((resp) => CountryMapper.toCountries(resp)),
+      map(countries => countries.at(0)),
+      catchError((error) => {
+        return throwError(() => new Error(`Country not found with the code "${code}"`));
       })
     );
   }
