@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, delay, map } from 'rxjs/operators';
 import { RestCountryResponse } from '../interfaces/rest-country.interface';
 import { CountryMapper } from '../mappers/country.mapper';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { Country } from '../interfaces/country.interface';
 
 const API_URL = 'https://restcountries.com/v3.1';
