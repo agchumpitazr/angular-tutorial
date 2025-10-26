@@ -1,0 +1,44 @@
+<section class="mx-10">
+  <h1 class="text-3xl">{{ country().name }}</h1>
+  <h1 class="text-xl font-thin">Population: {{ country().population | number }}</h1>
+</section>
+
+<section>
+  <div class="stats shadow mx-5">
+    <div class="stat place-items-center">
+      <div class="stat-title">Population</div>
+      <div class="stat-value">{{ country().population | number }}</div>
+      <div class="stat-desc">From {{ currentYear() }}</div>
+    </div>
+
+    <div class="stat place-items-center">
+      <div class="stat-title">Name</div>
+      <div class="stat-value text-secondary">{{ country().name }}</div>
+      <div class="stat-desc text-secondary">{{ country().region }}</div>
+    </div>
+
+    <div class="stat place-items-center">
+      <div class="stat-title">Sub Region</div>
+      <div class="stat-value">{{ country().subRegion }}</div>
+      <div class="stat-desc">{{ country().region }}</div>
+    </div>
+  </div>
+</section>
+
+<section class="mt-5">
+  <figure class="diff aspect-16/9" tabindex="0">
+    <div class="diff-item-1" role="img" tabindex="0">
+      <img
+        [alt]="country().name"
+        [src]="country().flagSVG"
+      />
+    </div>
+    <div class="diff-item-2" role="img">
+      <img class="blur brightness-75"
+        [alt]="country().name"
+        [src]="country().flagSVG"
+      />
+    </div>
+    <div class="diff-resizer"></div>
+  </figure>
+</section>

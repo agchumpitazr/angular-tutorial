@@ -11,6 +11,7 @@ export class CountryMapper {
       population: resCountry.population,
       flagSVG: resCountry.flags.svg,
       region: resCountry.region,
+      subRegion: resCountry.subregion
     };
     return country;
   }
