@@ -5,4 +5,3 @@ export type Region =
   | 'Europe'
   | 'Oceania'
   | 'Antarctic';
-

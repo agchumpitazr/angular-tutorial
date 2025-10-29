@@ -1,10 +1,11 @@
-import { Component, inject, resource, signal } from '@angular/core';
+import { Component, inject, linkedSignal, resource, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop'
-import { firstValueFrom, of } from 'rxjs';
 
 import { CountryTableComponent } from '../../components/country-table/country-table.component';
 import { CountrySearchInputComponent } from '../../components/country-search-input/country-search-input.component';
 import { CountryService } from '../../services/country.service';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-by-capital-page',
@@ -13,13 +14,17 @@ import { CountryService } from '../../services/country.service';
 })
 export class ByCapitalPageComponent {
   countryServide = inject(CountryService);
+  // query = signal('');
+  activatedRoute = inject(ActivatedRoute);
+  queryParam = this.activatedRoute.snapshot.queryParamMap.get('query') ?? '';
 
-  query = signal('');
+  query = linkedSignal(() => this.queryParam);
 
   countryResource = rxResource({
-
     params: () => ({ query: this.query()}),
     stream: ({params}) => { // Destructure params to get query
+
+      console.log({query: params.query})
       if (!params.query) return of([]);
       return this.countryServide.searchByCapital(params.query); // Convert Observable to Promise
     },

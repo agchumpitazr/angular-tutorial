@@ -1,6 +1,9 @@
 <country-search-input
 placeholder="Search by Capital..."
-(searchValue) = "query.set($event)"/>
+(searchValue) = "query.set($event)"
+[debounceTime] = "300"
+[initialValue] = "query()"
+/>
 
   <country-table
     [countries]="countryResource.value() ?? []"
