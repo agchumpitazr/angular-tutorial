@@ -1,9 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, linkedSignal, signal } from '@angular/core';
 import { CountryTableComponent } from '../../components/country-table/country-table.component';
 import type { Region } from '../../interfaces/region.type';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
 import { CountryService } from '../../services/country.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-by-region-page',
@@ -13,7 +14,12 @@ import { CountryService } from '../../services/country.service';
 export class ByRegionPageComponent {
   public regions: Region[] = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania', 'Antarctic'];
   countryServide = inject(CountryService);
-  selectedRegion = signal<Region | null>(null);
+
+  router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
+  queryParam = (this.activatedRoute.snapshot.queryParamMap.get('region')) as Region;
+
+  selectedRegion = linkedSignal<Region>(() => this.queryParam ?? 'Americas');
 
   selectRegion(region: Region) {
     this.selectedRegion.set(region);
@@ -25,6 +31,13 @@ export class ByRegionPageComponent {
     stream: ({ params }) => {
       // Destructure params to get query
       if (!params.query) return of([]);
+
+      this.router.navigate(['/country/by-region'], {
+        queryParams: {
+          query: params.query
+        }
+      })
+
       return this.countryServide.searchByRegion(params.query); // Convert Observable to Promise
     },
   });
